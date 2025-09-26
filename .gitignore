@@ -1,0 +1,72 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+.eggs/
+*.log
+*.pot
+*.pyc
+
+# ---- Virtualenv ----
+venv/
+env/
+.venv/
+ENV/
+env.bak/
+venv.bak/
+
+# ---- Django ----
+*.sqlite3
+db.sqlite3
+media/
+staticfiles/
+static/
+
+# ---- Migrations ----
+*/migrations/__pycache__/   # ✅ Ignorar solo los compilados, no los .py
+
+# ---- IDEs / Editors ----
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# ---- OS ----
+.DS_Store
+Thumbs.db
+
+# ---- Environments / Config ----
+.env
+.env.local
+.env.prod
+.env.dev
+
+# ---- Pytest / Coverage ----
+.coverage
+htmlcov/
+.tox/
+.cache/
+.pytest_cache/
+
+# ---- Deployment ----
+*.pid
+*.seed
+*.out
+*.log
+*.pot
+*.mo
+
+# ---- Pip ----
+pip-log.txt
+pip-delete-this-directory.txt
+
+# ---- Build / Packaging ----
+build/
+dist/
+*.manifest
+*.spec
+*.lock
