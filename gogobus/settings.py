@@ -106,7 +106,6 @@ DATABASES = {
         'PORT': config('DB_PORT', default='5432'),
         "CONN_MAX_AGE": 0,
         'OPTIONS': {
-            "MAX_CONNS": 20,
             'sslmode': 'require',  # 👈 necesario si tu DB tiene SSL obligatorio
         },
     }
