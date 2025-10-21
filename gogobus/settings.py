@@ -23,6 +23,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config('SECRET_KEY')
+MERCADOPAGO_ACCESS_TOKEN = config('MERCADOPAGO_ACCESS_TOKEN')
+MERCADOPAGO_WEBHOOK = config('MERCADOPAGO_WEBHOOK')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG')
@@ -50,6 +52,7 @@ INSTALLED_APPS = [
     'trips',
     'buses',
     'bookings',
+    'payments',
 ]
 
 MIDDLEWARE = [
