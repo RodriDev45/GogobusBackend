@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Location, Trip
 from buses.models import Bus
 from bookings.models import BookingPassenger
-from buses.serializers import BusDetailSerializer
+from buses.serializers import BusDetailSerializer, BusSimpleSerializer, BusSerializer
 
 class LocationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -13,7 +13,7 @@ class LocationSerializer(serializers.ModelSerializer):
 class TripSerializer(serializers.ModelSerializer):
     origin = LocationSerializer(read_only=True)
     destination = LocationSerializer(read_only=True)
-    bus = serializers.StringRelatedField(read_only=True)
+    bus = BusSimpleSerializer(read_only=True)
 
     origin_id = serializers.PrimaryKeyRelatedField(
         queryset=Location.objects.all(), source="origin", write_only=True
@@ -24,6 +24,7 @@ class TripSerializer(serializers.ModelSerializer):
     bus_id = serializers.PrimaryKeyRelatedField(
         queryset=Bus.objects.all(), source="bus", write_only=True
     )
+    available_seats_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Trip
@@ -38,23 +39,42 @@ class TripSerializer(serializers.ModelSerializer):
             "departure_time",
             "arrival_time",
             "price",
+            "available_seats_count",
             "created_at",
         ]
+    
+    def get_available_seats_count(self, obj):
+        """Devuelve el número de asientos disponibles del bus."""
+        total_seats = obj.bus.seats.count()  # todos los asientos del bus
+        occupied = BookingPassenger.objects.filter(
+            booking__trip=obj,
+            booking__status__in=["PENDING", "PAID"]
+        ).count()
+        return total_seats - occupied
+
 
 
 class TripDetailSerializer(serializers.ModelSerializer):
-    origin = serializers.StringRelatedField()
-    destination = serializers.StringRelatedField()
+    origin = LocationSerializer(read_only=True)
+    destination = LocationSerializer(read_only=True)
     bus = BusDetailSerializer(read_only=True)
     occupied_seats = serializers.SerializerMethodField()
     available_seats = serializers.SerializerMethodField()
+    origin_id = serializers.PrimaryKeyRelatedField(
+        queryset=Location.objects.all(), source="origin", write_only=True
+    )
+    destination_id = serializers.PrimaryKeyRelatedField(
+        queryset=Location.objects.all(), source="destination", write_only=True
+    )
 
     class Meta:
         model = Trip
         fields = [
             "id",
             "origin",
+            "origin_id",
             "destination",
+            "destination_id",
             "departure_time",
             "arrival_time",
             "price",

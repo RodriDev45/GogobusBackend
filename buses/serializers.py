@@ -29,3 +29,8 @@ class BusDetailSerializer(serializers.ModelSerializer):
                 "position": seat.position
             })
         return result
+    
+class BusSimpleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bus
+        fields = ["id", "modelo", "placa", "capacidad"]
