@@ -2,6 +2,7 @@ from rest_framework import status, permissions, viewsets
 from rest_framework.decorators import action
 from utils.responses import success_response, error_response
 from django.conf import settings
+from decimal import Decimal
 import json
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.decorators import api_view
@@ -77,7 +78,8 @@ class PaymentViewSet(viewsets.ModelViewSet):
                         "number": request.data["number"],
                     },
                 },
-            }
+            }   
+            print(json.dumps(payment_data, indent=2))
 
             payment_response = sdk.payment().create(payment_data)
             payment_info = payment_response["response"]
