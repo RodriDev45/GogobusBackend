@@ -6,6 +6,17 @@ class Location(models.Model):
     terminal = models.CharField(max_length=150, blank=True, null=True)  # Ej: "Plaza Norte"
     address = models.CharField(max_length=255, blank=True, null=True)
     region = models.CharField(max_length=100, blank=True, null=True)
+    # ➤ NUEVOS CAMPOS
+    latitude = models.DecimalField(
+        max_digits=9, 
+        decimal_places=6, 
+        default=-12.046374  # Latitud por defecto (Lima)
+    )
+    longitude = models.DecimalField(
+        max_digits=9, 
+        decimal_places=6, 
+        default=-77.042793  # Longitud por defecto (Lima)
+    )
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
